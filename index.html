@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        
         *{
             margin: 0;
             padding: 0;
@@ -42,10 +41,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="banner">
-        <div class="slider" style="--quantity: 10">
-            <div class="item" style="--position: 1"><p>I Love you</p></div>
+        <!-- Carrusel Superior -->
+        <div class="slider top-slider" style="--quantity: 10">
+            <div class="item" style="--position: 1"><img src="images/dragon_1.jpg" alt=""></div>
             <div class="item" style="--position: 2"><img src="images/dragon_2.jpg" alt=""></div>
             <div class="item" style="--position: 3"><img src="images/dragon_3.jpg" alt=""></div>
             <div class="item" style="--position: 4"><img src="images/dragon_4.jpg" alt=""></div>
@@ -55,12 +54,22 @@
             <div class="item" style="--position: 8"><img src="images/dragon_8.jpg" alt=""></div>
             <div class="item" style="--position: 9"><img src="images/dragon_9.jpg" alt=""></div>
             <div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
-            <div class="item" style="--position: 11"><img src="images/dragon_10.jpg" alt=""></div>
-            <div class="item" style="--position: 12"><img src="images/dragon_10.jpg" alt=""></div>
-            <div class="item" style="--position: 13"><img src="images/dragon_10.jpg" alt=""></div>
-            <div class="item" style="--position: 14"><img src="images/dragon_10.jpg" alt=""></div>
-            <div class="item" style="--position: 15"><img src="images/dragon_10.jpg" alt=""></div>
         </div>
+
+        <!-- Carrusel Inferior -->
+        <div class="slider bottom-slider" style="--quantity: 10">
+            <div class="item" style="--position: 1"><div class="blur-card">Card 1</div></div>
+            <div class="item" style="--position: 2"><div class="blur-card">Card 2</div></div>
+            <div class="item" style="--position: 3"><div class="blur-card">Card 3</div></div>
+            <div class="item" style="--position: 4"><div class="blur-card">Card 4</div></div>
+            <div class="item" style="--position: 5"><div class="blur-card">Card 5</div></div>
+            <div class="item" style="--position: 6"><div class="blur-card">Card 6</div></div>
+            <div class="item" style="--position: 7"><div class="blur-card">Card 7</div></div>
+            <div class="item" style="--position: 8"><div class="blur-card">Card 8</div></div>
+            <div class="item" style="--position: 9"><div class="blur-card">Card 9</div></div>
+            <div class="item" style="--position: 10"><div class="blur-card">Card 10</div></div>
+        </div>
+
         <div class="content">
             <h1 data-content="I Love you">
                 I Love you
@@ -73,51 +82,53 @@
             </div>
         </div>
     </div>
-    
-</body>
-</html>
 
-<script>
-    const slider = document.querySelector('.slider');
-    let isDragging = false;
-    let startX;
-    let currentRotate = 0;
+    <script>
+    const sliders = document.querySelectorAll('.slider');
     
-    // Eventos para mouse
-    slider.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        slider.style.cursor = 'grabbing';
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.clientX - startX;
-        currentRotate += deltaX * 0.3;
-        slider.style.transform = `perspective(1000px) rotateX(-16deg) rotateY(${currentRotate}deg)`;
-        startX = e.clientX;
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-        slider.style.cursor = 'grab';
-    });
-    
-    // Eventos para pantallas táctiles
-    slider.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.touches[0].clientX - startX;
-        currentRotate += deltaX * 0.3;
-        slider.style.transform = `perspective(1000px) rotateX(-16deg) rotateY(${currentRotate}deg)`;
-        startX = e.touches[0].clientX;
-    });
-    
-    document.addEventListener('touchend', () => {
-        isDragging = false;
+    sliders.forEach(slider => {
+        let isDragging = false;
+        let startX;
+        let currentRotate = 0;
+
+        // Eventos para mouse
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            slider.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - startX;
+            currentRotate += deltaX * 0.3;
+            slider.style.transform = `perspective(1000px) rotateY(${currentRotate}deg)`;
+            startX = e.clientX;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            slider.style.cursor = 'grab';
+        });
+
+        // Eventos táctiles
+        slider.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.touches[0].clientX - startX;
+            currentRotate += deltaX * 0.3;
+            slider.style.transform = `perspective(1000px) rotateY(${currentRotate}deg)`;
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
     });
     </script>
+</body>
+</html>
