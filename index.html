@@ -1,134 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <style>
-        *{
+        body {
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .carousel-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
             box-sizing: border-box;
         }
-        body{
-            background-color: #D2D2D2;
-            background-image:
-            repeating-linear-gradient(
-                to right, transparent 0 100px,
-                #25283b22 100px 101px
-            ),
-            repeating-linear-gradient(
-                to bottom, transparent 0 100px,
-                #25283b22 100px 101px
-            );
+
+        .carousel-track {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 50vh 20px;
+            box-sizing: border-box;
         }
-        
-        body::before{
-            position: absolute;
-            width: min(1400px, 90vw);
-            top: 10%;
-            left: 50%;
-            height: 90%;
-            transform: translateX(-50%);
-            content: '';
-            background-image: url(images/bg.png);
-            background-size: 100%;
-            background-repeat: no-repeat;
-            background-position: top center;
+
+        .carousel-item {
+            width: calc(100% - 40px);
+            height: 150px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 1.2rem;
+            transform-origin: center;
+            will-change: transform, opacity;
+            box-sizing: border-box;
+        }
+
+        .center-indicator {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: rgba(255, 0, 0, 0.2);
             pointer-events: none;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item {
+                height: 120px;
+                font-size: 1rem;
+            }
         }
     </style>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="banner">
-        <!-- Carrusel Superior -->
-        <div class="slider top-slider" style="--quantity: 10">
-            <div class="item" style="--position: 1"><img src="images/dragon_1.jpg" alt=""></div>
-            <div class="item" style="--position: 2"><img src="images/dragon_2.jpg" alt=""></div>
-            <div class="item" style="--position: 3"><img src="images/dragon_3.jpg" alt=""></div>
-            <div class="item" style="--position: 4"><img src="images/dragon_4.jpg" alt=""></div>
-            <div class="item" style="--position: 5"><img src="images/dragon_5.jpg" alt=""></div>
-            <div class="item" style="--position: 6"><img src="images/dragon_6.jpg" alt=""></div>
-            <div class="item" style="--position: 7"><img src="images/dragon_7.jpg" alt=""></div>
-            <div class="item" style="--position: 8"><img src="images/dragon_8.jpg" alt=""></div>
-            <div class="item" style="--position: 9"><img src="images/dragon_9.jpg" alt=""></div>
-            <div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
-        </div>
-
-        <!-- Carrusel Inferior -->
-        <div class="slider bottom-slider" style="--quantity: 10">
-            <div class="item" style="--position: 1"><div class="blur-card">Card 1</div></div>
-            <div class="item" style="--position: 2"><div class="blur-card">Card 2</div></div>
-            <div class="item" style="--position: 3"><div class="blur-card">Card 3</div></div>
-            <div class="item" style="--position: 4"><div class="blur-card">Card 4</div></div>
-            <div class="item" style="--position: 5"><div class="blur-card">Card 5</div></div>
-            <div class="item" style="--position: 6"><div class="blur-card">Card 6</div></div>
-            <div class="item" style="--position: 7"><div class="blur-card">Card 7</div></div>
-            <div class="item" style="--position: 8"><div class="blur-card">Card 8</div></div>
-            <div class="item" style="--position: 9"><div class="blur-card">Card 9</div></div>
-            <div class="item" style="--position: 10"><div class="blur-card">Card 10</div></div>
-        </div>
-
-        <div class="content">
-            <h1 data-content="I Love you">
-                I Love you
-            </h1>
-            <div class="author">
-                <h2>For Maria</h2>
-                <p>
-                    Subscribe to the channel to watch many interesting videos
-                </p>
-            </div>
+    <div class="center-indicator"></div>
+    <div class="carousel-container">
+        <div class="carousel-track">
+            <div class="carousel-item">Elemento 1: Lorem ipsum dolor sit amet</div>
+            <div class="carousel-item">Elemento 2: Consectetur adipiscing elit</div>
+            <div class="carousel-item">Elemento 3: Sed do eiusmod tempor</div>
+            <div class="carousel-item">Elemento 4: Ut labore et dolore magna</div>
+            <div class="carousel-item">Elemento 5: Ut enim ad minim veniam</div>
+            <div class="carousel-item">Elemento 6: Quis nostrud exercitation</div>
+            <div class="carousel-item">Elemento 7: Lorem ipsum dolor sit amet</div>
+            <div class="carousel-item">Elemento 8: Consectetur adipiscing elit</div>
         </div>
     </div>
 
     <script>
-    const sliders = document.querySelectorAll('.slider');
-    
-    sliders.forEach(slider => {
-        let isDragging = false;
-        let startX;
-        let currentRotate = 0;
+        const container = document.querySelector('.carousel-container');
+        const items = document.querySelectorAll('.carousel-item');
+        const centerIndicator = document.querySelector('.center-indicator');
 
-        // Eventos para mouse
-        slider.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            slider.style.cursor = 'grabbing';
+        // Posicionar el indicador del centro
+        function updateCenterIndicator() {
+            centerIndicator.style.top = `${window.innerHeight / 2}px`;
+        }
+        updateCenterIndicator();
+
+        function easeInOutQuad(x) {
+            return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+        }
+
+        function getSmoothScale(distance) {
+            // Distancia máxima para el efecto (ajusta este valor según necesites)
+            const maxDistance = 400;
+            
+            // Normalizar la distancia a un valor entre 0 y 1
+            const normalizedDistance = Math.min(distance / maxDistance, 1);
+            
+            // Calcular la escala usando una función suave
+            // Esto dará una escala entre 1 (cuando distance = 0) y 0.4 (cuando distance >= maxDistance)
+            const scale = 1 - (0.6 * easeInOutQuad(normalizedDistance));
+            
+            return Math.max(0.4, scale);
+        }
+
+        function getSmoothOpacity(distance) {
+            const maxDistance = 400;
+            const normalizedDistance = Math.min(distance / maxDistance, 1);
+            const opacity = 1 - (0.8 * easeInOutQuad(normalizedDistance));
+            return Math.max(0.2, opacity);
+        }
+
+        function updateScale() {
+            const windowCenter = window.innerHeight / 2;
+            
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.top + (rect.height / 2);
+                const distanceFromCenter = Math.abs(windowCenter - itemCenter);
+                
+                // Aplicar escala y opacidad suaves
+                const scale = getSmoothScale(distanceFromCenter);
+                const opacity = getSmoothOpacity(distanceFromCenter);
+
+                item.style.transform = `scale(${scale})`;
+                item.style.opacity = opacity;
+            });
+        }
+
+        // Centrar el primer elemento al cargar
+        function centerFirstElement() {
+            if (items.length > 0) {
+                const firstItem = items[0];
+                const rect = firstItem.getBoundingClientRect();
+                const offset = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
+                window.scrollTo({
+                    top: offset,
+                    behavior: 'instant'
+                });
+            }
+        }
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(updateScale);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            updateCenterIndicator();
+            updateScale();
         });
 
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.clientX - startX;
-            currentRotate += deltaX * 0.3;
-            slider.style.transform = `perspective(1000px) rotateY(${currentRotate}deg)`;
-            startX = e.clientX;
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            centerFirstElement();
+            updateScale();
         });
 
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            slider.style.cursor = 'grab';
-        });
+        // Observador de intersección para mejor rendimiento
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateScale();
+                    }
+                });
+            },
+            {
+                root: null,
+                threshold: [0, 0.5, 1]
+            }
+        );
 
-        // Eventos táctiles
-        slider.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-        });
+        items.forEach(item => observer.observe(item));
 
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.touches[0].clientX - startX;
-            currentRotate += deltaX * 0.3;
-            slider.style.transform = `perspective(1000px) rotateY(${currentRotate}deg)`;
-            startX = e.touches[0].clientX;
-        });
-
-        document.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-    });
+        // Ejecutar centerFirstElement después de un pequeño delay
+        setTimeout(centerFirstElement, 100);
     </script>
 </body>
 </html>
